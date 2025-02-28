@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TempConvert</title>
+    <link rel="stylesheet" href="styles.css">
+   <style>
+       * {
+            margin: 0;
+           
+            font-family: 'Georgia', serif;
+        
+        }
+       body {
+       padding:20px;
+       display:flex;
+       flex-direction: column;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vp;
+    background-color:#8071e2a7;   
+    padding-top: 20%;         
+}
+h2{
+    font-family: 'Georgia', serif;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    padding:20px;
+}
+
+.container {
+			display:flex;
+    flex-direction: column;
+			justify-content:center;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 50px 50px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+input, select, button {
+    margin: 10px;
+    padding: 10px;
+    font-size: 16px;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+}
+     
+button {
+    background-color: #ff808a;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+#result {
+    font-size: 18px;
+    font-weight: bold;
+}
+.para {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    padding: 20px;
+    
+    border: 1px solid #ddd;
+    width: 100%;
+    
+}
+
+.con {
+    
+    background: #fff;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+h5 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
+    margin-top: 15px;
+}
+
+h4 {
+		text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    color: #222;
+    margin-top: 20px;
+    border-bottom: 2px solid #007bff;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+p:last-child {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 18px;
+}
+@media (min-width: 600px) {  
+    body {  
+        display: flex;  
+        flex-direction: column;  
+        align-items: center;  
+        text-align: center;  
+    }  
+    h2 {  
+        text-align: center;  
+    }  
+}
+
+
+   </style>
+</head>
+<body>
+    <h2>Temperature Converter</h2>
+    <div class="container">
+        <input type="number" id="temperatureInput" placeholder="Enter temperature" required>
+        
+        <select id="unitSelect">
+            <option value="Celsius">Celsius (°C)</option>
+            <option value="Fahrenheit">Fahrenheit (°F)</option>
+            <option value="Kelvin">Kelvin (K)</option>
+        </select>
+
+        <button onclick="convertTemperature()">Convert</button>
+
+        <h3>Converted Temperature:</h3>
+        <p id="result"></p>
+    </div>
+    <h2>Celsius (°C) :</h2>
+<div class="para">
+    <div class="con">
+        <p>The Celsius scale is widely used in most countries and in scientific applications.</p>
+        <h5>It is based on the properties of water:</h5>
+        <p>0°C = Freezing point of water</p>
+        <p>100°C = Boiling point of water (at standard atmospheric pressure)</p>
+        <p>The Celsius scale is a part of the metric system and is used in most scientific calculations.</p>
+        <p><strong>Conversion formulas involving Celsius:</strong></p>
+        <h4>Celsius to Kelvin:</h4>
+        <h5>K = °C + 273.15<br>°F = (°C × 9/5) + 32</h5>
+    </div>
+</div>
+
+    <h2>Kelvin (K) :</h2>
+<div class="para">
+    <div class="con">
+        <p>The Kelvin scale is the SI (International System of Units) standard for temperature.</p>
+        <p>It is an absolute temperature scale, meaning 0 K is the absolute lowest possible temperature (absolute zero), where all molecular motion stops.</p>
+        <p>The Kelvin scale does not use the degree symbol (°) and does not have negative values.</p>
+        <h5>Important reference points:</h5>
+        <p>0 K = Absolute zero</p>
+        <p>273.15 K = Freezing point of water</p>
+        <p>373.15 K = Boiling point of water</p>
+        <p><strong>Conversion formulas involving Kelvin:</strong></p>
+        <h4>Kelvin to Celsius:</h4>
+        <h5>°C = K - 273.15</h5>
+        <h5>°F = (K - 273.15) × 9/5 + 32</h5>
+    </div>
+</div>
+
+    <h2>Fahrenheit (°F) :</h2>
+<div class="para">
+    <div class="con">
+        <p>The Fahrenheit scale is mainly used in the United States and some Caribbean countries.</p>
+        <p>It was developed by Daniel Gabriel Fahrenheit.</p>
+        <h5>It is based on:</h5>
+        <p>32°F = Freezing point of water</p>
+        <p>212°F = Boiling point of water (at standard atmospheric pressure)</p>
+        <p><strong>Conversion formulas involving Fahrenheit:</strong></p>
+        <h4>Fahrenheit to Celsius:</h4>
+        <h5>°C = (°F - 32) × 5/9</h5>
+        <h5>K = (°F - 32) × 5/9 + 273.15</h5>
+    </div>
+</div>
+
+    <script>
+        function convertTemperature() {
+    let tempValue = document.getElementById("temperatureInput").value;
+    let unit = document.getElementById("unitSelect").value;
+    let result = document.getElementById("result");
+
+    if (tempValue === "" || isNaN(tempValue)) {
+        result.innerHTML = "Please enter a valid number!";
+        return;
+    }
+
+    tempValue = parseFloat(tempValue);
+    let convertedTemp = "";
+    
+    switch (unit) {
+        case "Celsius":
+            convertedTemp = `Fahrenheit: ${(tempValue * 9/5 + 32).toFixed(2)} °F | Kelvin: ${(tempValue + 273.15).toFixed(2)} K`;
+            break;
+        case "Fahrenheit":
+            convertedTemp = `Celsius: ${((tempValue - 32) * 5/9).toFixed(2)} °C | Kelvin: ${(((tempValue - 32) * 5/9) + 273.15).toFixed(2)} K`;
+            break;
+        case "Kelvin":
+            convertedTemp = `Celsius: ${(tempValue - 273.15).toFixed(2)} °C | Fahrenheit: ${((tempValue - 273.15) * 9/5 + 32).toFixed(2)} °F`;
+            break;
+    }
+
+    result.innerHTML = convertedTemp;
+}
+        
+    </script>
+</body>
+</html>
